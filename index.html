@@ -23,31 +23,38 @@
         </header>
 
         <!-- Meilleur film -->
-        <section class="movie__box movie__box--best">
-            <p>Best Movie</p>
-        </section>
-        <!-- Catégorie 1 : Films les mieux notés -->
-        <section class="movies__category--best">
-            <div class="bestRankedMovies">
-                <p>Films les mieux notés</p>
+        <section id="bestMovie" class="movie__box movie__box--best">
+            <div id="bestMovie__image"></div>
+            <div class = bestMovie__visual>
+                <div id="bestMovie__title"></div>
+                <div id="bestMovie__description"></div>
+                <div id="bestMovie__infos"></div>
+                <button type="button" id="button__modal" class="button">Informations</button>
             </div>
-            <div class="movieBoxes">
-                <div class="movie__box">
-                    <p>Movie 1</p>
+            <div id="myModal" class="modal">
+                <div class="modalContent">
+                    <span class="close">&times;</span>
+                    <div id="headerModal">
+                        <span id="headerModal__originalTitle" class="infoModal"></span>
+                        <span id="headerModal__filmImage" class="infoModal"></span>
                 </div>
-                <div class="movie__box">
-                    <p>Movie 2</p>
-                </div>
-                <div class="movie__box">
-                    <p>Movie 3</p>
-                </div>
-                <div class="movie__box">
-                    <p>Movie 4</p>
-                </div>
-                <div class="movie__box">
-                    <p>Movie 5</p>
+                <div id=infoModalText>
+                    <div id="infoModalText__genres" class="infoModal"></div>  
+                    <div id="infoModalText__datePublished" class="infoModal"></div>  
+                    <div id="infoModalText__rated" class="infoModal"></div>  
+                    <div id="infoModalText__imdbScore" class="infoModal"></div> 
+                    <div id="infoModalText__directors" class="infoModal"></div> 
+                    <div id="infoModalText__actors" class="infoModal"></div> 
+                    <div id="infoModalText__duration" class="infoModal"></div> 
+                    <div id="infoModalText__countries" class="infoModal"></div> 
+                    <div id="infoModalText__worldwideGrossIncome" class="infoModal"></div> 
+                    <div id="infoModalText__longDescription" class="infoModal"></div>
                 </div>
             </div>
         </section>
+        <!-- Catégories générées automatiquement -->
+        <section id="categories"></section>
+
+    <script type="text/javascript" src="./main.js"></script>
     </body>
 </html>
