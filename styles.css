@@ -85,7 +85,8 @@ header {
     display: flex;
     justify-content: stretch;
     align-items: center;
-    margin-left: 5%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
     margin-bottom: 25px;
 }
 
@@ -102,6 +103,7 @@ header {
     width: 90%;
     height: 400px;
     margin: 0 6rem;
+    margin-left: 10%;
     margin-bottom: 5rem;
 }
 
@@ -118,10 +120,26 @@ header {
     margin-bottom: 1rem;
     font-size: 1.2rem;
     font-weight: bold;
+    align-self: flex-start;
 }
 
 .category__box {
     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category__box :nth-child(1){
+    order: 1;
+}
+
+.category__prev, .category__next {
+    cursor: pointer;
+    font-size: 50px;
+    color: grey;
+    width: 50px;
+    height: 65px;
+    text-align: center;
 }
 
 /* The Modal (background) */

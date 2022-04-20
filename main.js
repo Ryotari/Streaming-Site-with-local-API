@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const urlBestFilmList = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score";
-let bestFilmUrl;
 
 function getFilmDatas(url, functionUrl, idDiv = "bestMovie") {
     // 1. Envoyer une requête vers l'API pour obtenir le meilleur film
@@ -36,19 +35,30 @@ function getFilmDatas(url, functionUrl, idDiv = "bestMovie") {
 }
 
 function getBestFilmUrl(result) {
-    bestFilmUrl = result.results[0].url;
+    let bestFilmUrl = result.results[0].url;
     getFilmDatas(bestFilmUrl, displayBestFilm)
 }
 
 function getFilmUrl(result,idDiv) {
     let div = document.createElement("div");
     div.setAttribute("id", idDiv + "__box");
-    div.setAttribute("class", "category__box")
+    div.setAttribute("class", "category__box");
     document.getElementById(idDiv).appendChild(div);
+    let leftSlideDiv = document.createElement("div");
+    let rightSlideDiv = document.createElement("div");
+    leftSlideDiv.setAttribute("id", idDiv + "__prev");
+    leftSlideDiv.setAttribute("class", "category__prev");
+    leftSlideDiv.innerHTML = "<";
+    rightSlideDiv.setAttribute("id", idDiv + "__next");
+    rightSlideDiv.setAttribute("class", "category__next");
+    rightSlideDiv.innerHTML = ">";
+    div.appendChild(rightSlideDiv);
+    div.appendChild(leftSlideDiv);
     for (let i = 0; i < 5; i++) {
         filmUrl = result.results[i].url;
         getFilmDatas(filmUrl, displayFilm, idDiv);
-    }
+    };
+
 }
 
 function displayBestFilm(data, idDiv) {
@@ -56,14 +66,23 @@ function displayBestFilm(data, idDiv) {
     document.getElementById("bestMovie__image").innerHTML = "<img src=" + data.image_url + "/>";
     document.getElementById("bestMovie__title").innerHTML = "<p>" + data.title + "</p>";
     document.getElementById("bestMovie__description").innerHTML = "<p>" + data.description + "</p>";
+    let btn = document.getElementById("button__modal");
+    btn.addEventListener('click', function() {
+    filmInfosModale(data);
+    modal.style.display = "block";
+})    
 }
 
 function displayFilm(data, idDiv) {
     // Ajoute les données récupérées au DOM
     let div = document.createElement("div")
     div.setAttribute("class", "movie__box")
-    div.innerHTML += "<img src=" + data.image_url + "/>";
+    div.innerHTML = "<img src=" + data.image_url + "/>";
     document.getElementById(idDiv + "__box").appendChild(div);
+    div.addEventListener('click', function() {
+        filmInfosModale(data);
+        modal.style.display = "block";
+    })
 }
 
 function filmInfosModale(result) {
@@ -82,14 +101,7 @@ function filmInfosModale(result) {
 }
 
 let modal = document.getElementById("myModal");
-let btn = document.getElementById("button__modal");
 let close = document.getElementsByClassName("close")[0];
-
-btn.addEventListener('click', function() {
-    getFilmDatas(bestFilmUrl, filmInfosModale)
-    modal.style.display = "block"
-})
-
 
 close.addEventListener('click', function() {
     modal.style.display = "None";
@@ -101,17 +113,17 @@ window.onclick = function(event) {
   }
 }
 
-function makeCategory(category) {
+function makeCategory(category, nbSlide = 1) {
     let genre;
     let filmUrlList;
     let idDiv;
     if (category == "Films les mieux notés"){
-        filmUrlList = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score";
+        filmUrlList = "http://localhost:8000/api/v1/titles/?page=" + nbSlide + "&sort_by=-imdb_score";
         idDiv = "bestMovies"
     }else{
         genre = category;
         idDiv = category;
-        filmUrlList = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=" + genre;
+        filmUrlList = "http://localhost:8000/api/v1/titles/?page=" + nbSlide + "&sort_by=-imdb_score&genre=" + genre;
     }
     console.log(idDiv)
     let div = document.createElement("div");
@@ -127,6 +139,28 @@ function makeCategory(category) {
     document.getElementById(idDiv + "Title").appendChild(h1);
 
     getFilmDatas(filmUrlList, getFilmUrl, idDiv);
+    changeSlide(category, idDiv, nbSlide)
+}
+
+async function changeSlide (category, idDiv, nbSlide) {
+    let previous = await document.getElementById(idDiv + "__prev");
+    console.log(previous)
+    let next = await document.getElementById(idDiv + "__next");
+    console.log(next)
+    previous.addEventListener('click', function() {
+        nbSlide += -1;
+        if (nbSlide == 0){
+            nbSlide = 7;
+        }
+        makeCategory(category, nbSlide);
+    });
+    next.addEventListener('click', function() {
+        nbSlide += 1;
+        if (nbSlide == 8){
+            nbSlide = 1;
+        }
+        makeCategory(category, nbSlide);
+    });
 }
 
 const categories = [
