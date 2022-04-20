@@ -81,22 +81,17 @@ header {
 }
 
 .movie__box {
-    height: 268px;
     display: flex;
     justify-content: stretch;
     align-items: center;
     margin-left: 2.5%;
     margin-right: 2.5%;
     margin-bottom: 25px;
+    margin-top: 40px;
 }
 
 .movie__box img {
     box-shadow: 5px -5px grey;
-}
-
-.movieBoxes {
-    display: flex;
-    justify-content: center;
 }
 
 .movie__box--best {
@@ -105,6 +100,7 @@ header {
     margin: 0 6rem;
     margin-left: 10%;
     margin-bottom: 5rem;
+    flex-flow: row-wrap;
 }
 
 .movies__category--best {
@@ -113,12 +109,14 @@ header {
 
 .category {
     margin-left: 5%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .category__title h1{
     margin-left: 8rem;
     margin-bottom: 1rem;
-    font-size: 1.2rem;
+    font-size: 30px;
     font-weight: bold;
     align-self: flex-start;
 }
@@ -129,17 +127,23 @@ header {
     justify-content: center;
 }
 
-.category__box :nth-child(1){
-    order: 1;
-}
-
 .category__prev, .category__next {
     cursor: pointer;
     font-size: 50px;
-    color: grey;
+    color: black;
     width: 50px;
     height: 65px;
     text-align: center;
+    align-self: center;
+}
+
+.category__prev{
+    order: -1;
+}
+
+.category__next {
+    margin-left: 10%;
+    order: 1;
 }
 
 /* The Modal (background) */
