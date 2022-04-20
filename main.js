@@ -180,5 +180,8 @@ function displaySlide (category, idDiv){
 
 const categories = [
     "Films les mieux notés",
-    "Animation"
+    "Animation",
+    "Mystery",
+    "Sci-Fi",
+    "Action"
 ];

@@ -139,6 +139,7 @@ header {
 
 .category__prev{
     order: -1;
+    margin-right: 10%;
 }
 
 .category__next {
