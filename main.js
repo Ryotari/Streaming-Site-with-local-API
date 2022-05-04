@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const urlBestFilmList = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score";
 
 function getFilmDatas(url, functionUrl, idDiv = "bestMovies") {
-    // 1. Envoyer une requête vers l'API pour obtenir le meilleur film
+    // 1. Envoyer une requête vers l'API pour obtenir le film
     fetch(url, {
         method: 'GET',
         headers: {
@@ -20,11 +20,11 @@ function getFilmDatas(url, functionUrl, idDiv = "bestMovies") {
         }
     })
     .then(res => {
-        // 2. Récupérer le meilleur film dans le résultat de la requête
+        // 2. Récupérer le film dans le résultat de la requête
         return res.json()
     })
     .then(data => {
-        // 3. Afficher le meilleur film dans notre page Html
+        // 3. Afficher le film dans notre page Html
         return functionUrl(data, idDiv);
     })
     .catch(err => {
@@ -45,7 +45,6 @@ function getFilmUrl(result, idDiv) {
         filmUrl = result.results[i].url;
         getFilmDatas(filmUrl, displayFilm, idDiv);
     };
-
 }
 
 function displayBestFilm(data, idDiv) {
@@ -57,14 +56,13 @@ function displayBestFilm(data, idDiv) {
     btn.addEventListener('click', function() {
     filmInfosModale(data);
     modal.style.display = "block";
-})    
+    })    
 }
 
 function displayFilm(data, idDiv) {
     // Ajoute les données récupérées au DOM
     let div = document.createElement("div");
     div.setAttribute("class", "movie__box");
-    console.log("ici " + idDiv)
     document.getElementById(idDiv + "__box").appendChild(div);
 
     div.innerHTML += "<img src=" + data.image_url + "/>";
@@ -111,21 +109,25 @@ function makeCategory(category) {
         idDiv = "bestMovies"
     }
 
-    console.log(idDiv)
+    let span = document.createElement("span");
+    span.setAttribute("id", idDiv + "__title")
+    span.setAttribute("class", "category__title")
+    document.getElementById("categories").appendChild(span);
+    let h1 = document.createElement("h1");
+    h1.innerHTML = category;
+    document.getElementById(idDiv + "__title").appendChild(h1);
+
+    console.log(idDiv);
     let div = document.createElement("div");
     div.setAttribute("id", idDiv);
     div.setAttribute("class", "category");
     div.setAttribute("slide", 1);
     document.getElementById("categories").appendChild(div);
 
-    let h1 = document.createElement("h1");
-    h1.innerHTML = category;
-    document.getElementById(idDiv).appendChild(h1);
-
-    let divSec = document.createElement("div");
-    divSec.setAttribute("id", idDiv + "__box");
-    divSec.setAttribute("class", "category__box");
-    document.getElementById(idDiv).appendChild(divSec);
+    let secondDiv = document.createElement("div");
+    secondDiv.setAttribute("id", idDiv + "__box");
+    secondDiv.setAttribute("class", "category__box");
+    document.getElementById(idDiv).appendChild(secondDiv);
 
     let leftSlideDiv = document.createElement("div");
     let rightSlideDiv = document.createElement("div");
@@ -135,8 +137,15 @@ function makeCategory(category) {
     rightSlideDiv.setAttribute("id", idDiv + "__next");
     rightSlideDiv.setAttribute("class", "category__next");
     rightSlideDiv.innerHTML = ">";
+    div.insertBefore(leftSlideDiv, secondDiv);
     div.appendChild(rightSlideDiv);
-    div.appendChild(leftSlideDiv);
+
+    let li = document.createElement("li");
+    document.getElementsByClassName("category__bar")[0].appendChild(li);
+    let nav = document.createElement("a");
+    nav.setAttribute("href", "#" + idDiv + "__title");
+    nav.textContent = category;
+    li.appendChild(nav);
 
     leftSlideDiv = document.getElementById(idDiv + "__prev");
     leftSlideDiv.addEventListener('click', function() {

@@ -13,17 +13,20 @@
                 <div class="logo">
                     <img src="./logo.png">
                 </div>
-                <nav class="menus">
+                <nav>
                     <ul>
-                        <li>Accueil</li>
-                        <li>Catégories</li>
+                        <li><a href="#">Accueil</a></li>
+                        <li class="scrollingMenu">
+                            <a href="#">Catégories</a>
+                            <ul class="category__bar"></ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
         </header>
 
         <!-- Meilleur film -->
-        <section id="bestMovie" class="movie__box movie__box--best">
+        <section id="bestMovie" class="movie__box--best">
             <div id="bestMovie__image"></div>
             <div class = bestMovie__visual>
                 <div id="bestMovie__title"></div>
